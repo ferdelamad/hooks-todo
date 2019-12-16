@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import styled from 'styled-components';
 import Checkbox from "./Checkbox";
 
@@ -25,17 +25,17 @@ const Item = styled.li`
   }
 `;
 
-export default function TodoItem({ todo, onChange, onDelete }) {
-  console.log("TodoItem", todo);
+export default memo(function TodoItem({ todo, onChange, onDelete }) {
+  console.log("I'm not updating all the time!", todo);
   return (
     <Item key={todo.id}>
       <Checkbox
         id={todo.id}
         label={todo.text}
         checked={todo.completed}
-        onChange={onChange}
+        onChange={() => onChange(todo.id)}
       />
-      <Button onClick={onDelete}>x</Button>
+      <Button onClick={() => onDelete(todo.id)}>x</Button>
     </Item>
   );
-}
+});

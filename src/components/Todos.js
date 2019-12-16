@@ -1,4 +1,4 @@
-import React, { useState, useRef, useReducer } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 import NewTodo from './NewTodo';
@@ -26,24 +26,14 @@ const List = styled.ul`
 `;
 
 export default function Todos() {
-  const [newTodo, updateNewTodo] = useState('');
-  const [todos, dispatch] = useTodos();
-
-  const handleNewTodoChange = e => {
-    updateNewTodo(e.target.value);
-  }
-
-  const handleNewTodoSubmit = e => {
-    e.preventDefault();
-    dispatch({ type: 'ADD_TODO', text: newTodo })
-    updateNewTodo('');
-  }
-
-  const handleToggleChange = id =>
-    dispatch({ type: 'TOGGLE_TODO', id });
-
-  const handleDeleteTodo = id =>
-    dispatch({ type: 'DELETE_TODO', id });
+  const {
+    todos,
+    newTodo,
+    handleToggleChange,
+    handleDeleteChange,
+    handleNewTodoSubmit,
+    handleNewTodoChange
+   } = useTodos();
 
   return(
     <TodosContainer>
@@ -54,8 +44,8 @@ export default function Todos() {
             <TodoItem
               key={todo.id}
               todo={todo}
-              onChange={() => handleToggleChange(todo.id)}
-              onDelete={() => handleDeleteTodo(todo.id)}
+              onChange={handleToggleChange}
+              onDelete={handleDeleteChange}
             />
           ))}
         </List>

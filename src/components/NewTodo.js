@@ -74,4 +74,4 @@ export default function NewTodo({ value, onChange, onSubmit }) {
       />
     </Form>
   );
-}
+};
