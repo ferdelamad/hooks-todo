@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { createContext } from 'react';
 import styled from 'styled-components';
 
-import NewTodo from './NewTodo';
-import TodoItem from './TodoItem';
 import useTodos from '../hooks/useTodos';
+import NewTodo from './NewTodo';
+import TodosList from './TodosList';
 
 const TodosContainer = styled.div`
   margin: 3em auto 0 auto;
@@ -17,39 +17,20 @@ const TodosContainer = styled.div`
   }
 `;
 
-const List = styled.ul`
-  list-style: none;
-  border: 2px solid rgba(255, 255, 255, 0.5);
-  border-top: none;
-  margin: 0;
-  padding-left: 0;
-`;
+export const TodosStateContext = createContext();
+export const TodosDispatchContext = createContext();
 
 export default function Todos() {
-  const {
-    todos,
-    newTodo,
-    handleToggleChange,
-    handleDeleteChange,
-    handleNewTodoSubmit,
-    handleNewTodoChange
-   } = useTodos();
+  const [todos, dispatch] = useTodos();
 
   return(
-    <TodosContainer>
-      <NewTodo value={newTodo} onChange={handleNewTodoChange} onSubmit={handleNewTodoSubmit} />
-      {!!todos.length && (
-        <List>
-          {todos.map(todo => (
-            <TodoItem
-              key={todo.id}
-              todo={todo}
-              onChange={handleToggleChange}
-              onDelete={handleDeleteChange}
-            />
-          ))}
-        </List>
-      )}
-    </TodosContainer>
+    <TodosStateContext.Provider value={todos}>
+      <TodosDispatchContext.Provider value={dispatch}>
+        <TodosContainer>
+          <NewTodo />
+          <TodosList />
+        </TodosContainer>
+      </TodosDispatchContext.Provider>
+    </TodosStateContext.Provider>
   )
 }

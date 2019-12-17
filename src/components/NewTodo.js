@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext, useState, useCallback } from "react";
 import styled from 'styled-components';
+import { TodosDispatchContext } from './Todos';
 
 const NEW_TODO_MAX_LENGTH = 42;
 const NEW_TODO_WARNING_LENGTH = 25;
@@ -59,18 +60,33 @@ const Form = styled.form`
   }
 `;
 
-export default function NewTodo({ value, onChange, onSubmit }) {
+export default function NewTodo() {
+  const dispatch = useContext(TodosDispatchContext);
+  const [newTodo, updateNewTodo] = useState('');
+
+  const handleNewTodoSubmit = useCallback(
+    (e, text) => {
+      e.preventDefault();
+      dispatch({ type: 'ADD_TODO', text })
+      updateNewTodo('');
+    }
+  );
+
+  const handleNewTodoChange = useCallback(
+    e => updateNewTodo(e.target.value)
+  , []);
+
   return (
     <Form
-      onSubmit={onSubmit}
-      data-remaining={NEW_TODO_MAX_LENGTH - value.length}>
+      onSubmit={e => handleNewTodoSubmit(e, newTodo)}
+      data-remaining={NEW_TODO_MAX_LENGTH - newTodo.length}>
       <Input
         type="text"
         autoFocusx
         placeholder="New Todo..."
-        value={value}
+        value={newTodo}
         maxLength={NEW_TODO_MAX_LENGTH}
-        onChange={onChange}
+        onChange={handleNewTodoChange}
       />
     </Form>
   );
