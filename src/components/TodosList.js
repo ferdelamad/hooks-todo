@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 
-import { TodosStateContext } from './Todos';
+import { TodosStateContext } from '../context/TodosContext';
 import TodoItem from './TodoItem';
 
 const List = styled.ul`

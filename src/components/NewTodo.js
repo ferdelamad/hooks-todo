@@ -1,6 +1,6 @@
 import React, { useContext, useState, useCallback } from "react";
 import styled from 'styled-components';
-import { TodosDispatchContext } from './Todos';
+import { TodosDispatchContext } from '../context/TodosContext';
 
 const NEW_TODO_MAX_LENGTH = 42;
 const NEW_TODO_WARNING_LENGTH = 25;

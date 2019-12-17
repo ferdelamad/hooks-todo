@@ -1,7 +1,7 @@
 import React, { memo, useContext, useCallback } from "react";
 import styled from 'styled-components';
 import Checkbox from './Checkbox';
-import { TodosDispatchContext } from './Todos';
+import { TodosDispatchContext } from '../context/TodosContext';
 
 const Button = styled.button`
   font-weight: 400;
